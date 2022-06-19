@@ -1,6 +1,6 @@
 from openpyxl import load_workbook
 import PySimpleGUI as sg
-from datetime import datetime
+from datetime import datetime, date
 
 sg.theme('DarkAmber')  # Add a touch of color
 # All the stuff inside your window.
@@ -24,6 +24,7 @@ window = sg.Window('Data Entry', layout)
 def check_input(values):
     if values['-DUE_DATE-'] == "":
         sg.popup('No date entered')
+        # TODO add remaining validation for all required fields
         return None
     for key, value in values.items():
         print(key)
@@ -50,6 +51,8 @@ def check_input(values):
                 datetime.strptime(values['-DUE_DATE-'], '%d/%m/%y').strftime('%d/%m/%Y'),
                 time_stamp]
 
+
+
         sheet.append(data)
 
         wb.save(filename='Book1.xlsx')
@@ -59,6 +62,7 @@ def check_input(values):
         window["FIRST_NAME"].update(value='')
         window["LAST_NAME"].update(value='')
         window["NUMBER"].update(value='')
+        window["-DUE_DATE-"].update(value='')
         window["FIRST_NAME"].set_focus()
         window["Male"].reset_group()
         window["Female"].reset_group()
